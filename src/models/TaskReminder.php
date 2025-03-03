@@ -1,4 +1,5 @@
 <?php
+
 namespace Tracker\Models;
 
 use Tracker\Services\MailService;
@@ -38,9 +39,34 @@ class TaskReminder
             $message .= "<p>{$task['description']}</p>";
             $message .= "<p style='color:red; font-weight:bold;'>This is an automated reminder.</p>";
 
-            $this->mailService->sendReminderEmail(getenv('EMAIL_TO'), $subject, $message);
+          
+            $this->mailService->sendReminderEmail($subject, $message);
         }
     }
-}
-?>
 
+    public function successfulCreatedTask($task_name, $due_date, $expected_files)
+    {
+       if(!$this->isReminderSent($task_name,$due_date )){
+        $subject = "You have a new task: $task_name";
+        $message = "<h2 style='color:#007bff;'>Task Created Successfully</h2>";
+        $message .= "<p><strong>Task:</strong> $task_name</p>";
+        $message .= "<p><strong>Due Date:</strong> $due_date</p>";
+        $message .= "<p>Expected upload: $expected_files</p>";
+        $message .= "<p style='color:red; font-weight:bold;'>This is an automated reminder.</p>";
+
+       
+        $this->mailService->sendReminderEmail($subject, $message);
+        $this->LogReminder($task_name, $due_date);
+       }
+    }
+
+    public function isReminderSent($title, $due_date) {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM reminder_log WHERE title = ? AND due_date = ?");
+        $stmt->execute([$title, $due_date]);
+        return $stmt->fetchColumn() > 0;
+    }
+    public function LogReminder($title, $due_date) {
+        $stmt = $this->conn->prepare("INSERT INTO reminder_log (title, due_date) VALUES (?, ?)");
+        $stmt->execute([$title, $due_date]);
+    }
+}

@@ -5,9 +5,12 @@ namespace Tracker\Models;
 use PDO;
 use Tracker\Config\Database;
 
+use Tracker\Services\MailService;
+
 class CreateTask
 {
     private $conn;
+    private $mailService;
 
     public function __construct()
     {
@@ -15,6 +18,7 @@ class CreateTask
         if ($this->conn == null) {
             die("Database Connection Failed");
         }
+        $this->mailService = new MailService();
     }
 
     public function addTask($title, $description, $due_date, $expected_files)

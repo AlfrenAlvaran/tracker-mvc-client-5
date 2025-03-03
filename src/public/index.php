@@ -11,7 +11,7 @@ $dotenv->load();
 
 use Tracker\Controllers\TaskController;
 use Tracker\Models\TaskReminder;
-use Tracker\Services\MailService;
+
 
 $path = $_SERVER['PATH_INFO'] ?? '/';
 $parts = explode('/', $path);
@@ -24,9 +24,7 @@ $reminder = new TaskReminder();
 $reminder->sendReminders();
 
 
-$mailService = new MailService();
-// $mailService->sendReminderEmail(getenv('EMAIL_TO'), 'Test Email', 'This is a test email from Task Tracker.');
-// echo "Test email sent successfully!";
+
 
 switch($action) {
     case '';

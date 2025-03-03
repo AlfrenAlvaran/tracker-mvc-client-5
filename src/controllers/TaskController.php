@@ -6,12 +6,14 @@ use Tracker\Models\TaskModel;
 use Tracker\Models\CreateTask;
 use Tracker\Models\TaskReminder;
 
+
 class TaskController
 {
     private $task;
     private $createTask;
     private $taskReminder;
-    private $tasksPerPage = 5; // Number of tasks per page
+    private $tasksPerPage = 5;
+
 
     public function __construct()
     {
@@ -36,7 +38,10 @@ class TaskController
             if ($this->task->existed_task($title)) {
                 $error = "Task already exists.";
             } else {
-                $this->createTask->addTask($title, $description, $due_date, $expected_files);
+                $taskID = $this->createTask->addTask($title, $description, $due_date, $expected_files);
+                if ($taskID) {
+                    $this->taskReminder->successfulCreatedTask($title, $due_date, $expected_files, $description);
+                }
                 header("Location: /");
                 exit();
             }
