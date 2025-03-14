@@ -20,8 +20,8 @@ $id = $parts[2] ?? null;
 
 $controller = new TaskController();
 
-$reminder = new TaskReminder();
-$reminder->sendReminders();
+// $reminder = new TaskReminder();
+// $reminder->sendReminders();
 
 
 

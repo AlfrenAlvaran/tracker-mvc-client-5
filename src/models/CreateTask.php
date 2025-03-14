@@ -18,7 +18,7 @@ class CreateTask
         if ($this->conn == null) {
             die("Database Connection Failed");
         }
-        $this->mailService = new MailService();
+        // $this->mailService = new MailService();
     }
 
     public function addTask($title, $description, $due_date, $expected_files)
@@ -29,7 +29,7 @@ class CreateTask
         $taskID = $this->conn->lastInsertId();
 
        
-        $folderName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $title);
+        $folderName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $title). "_" . $taskID;
         $uploadDir = __DIR__ . "/../../upload/$folderName/";
 
        
@@ -87,7 +87,7 @@ class CreateTask
         } else {
             $status = "Not Started";
         }
-        var_dump($uploaded_count, $status); // Debugging
+        // var_dump($uploaded_count, $status);
 
         $stmt = $this->conn->prepare("UPDATE task SET status = ? WHERE Id = ?");
         $stmt->execute([$status, $id]);

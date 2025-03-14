@@ -8,7 +8,7 @@
 
         <div class="card  border-0 w-100">
             <div class="card-header bg-primary text-white text-center">
-                <h2 class="mb-0">User Information</h2>
+                <h2 class="mb-0">File Information</h2>
             </div>
             <div class="card-body p-5">
                 <div class="row">
