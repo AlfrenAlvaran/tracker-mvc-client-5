@@ -31,8 +31,8 @@
       </thead>
       <tbody>
         <?php foreach ($tasks as $task) {
-          $status = trim($task['status']); // Remove spaces if any
-          $status = ucfirst(strtolower($status)); // Normalize case
+          $status = trim($task['status']);
+          $status = ucfirst(strtolower($status));
           
           switch ($status) {
               case 'Not started':
