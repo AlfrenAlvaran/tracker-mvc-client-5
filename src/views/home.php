@@ -41,7 +41,7 @@
               case 'In progress':
                   $statusBadge = '<span class="badge bg-warning text-dark"><i class="fas fa-spinner"></i> In Progress</span>';
                   break;
-              case 'Complete': // Fix here (was 'Completed')
+              case 'Complete': 
                   $statusBadge = '<span class="badge bg-success"><i class="fas fa-circle-check"></i> Completed</span>';
                   break;
               default:
