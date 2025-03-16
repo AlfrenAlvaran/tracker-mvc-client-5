@@ -31,20 +31,25 @@
       </thead>
       <tbody>
         <?php foreach ($tasks as $task) {
-          switch ($task['status']) {
-            case 'Not Started':
-              $statusBadge = '<span class="badge bg-secondary"><i class="fas fa-circle-xmark"></i> Not Started</span>';
-              break;
-            case 'In Progress':
-              $statusBadge = '<span class="badge bg-warning text-dark"><i class="fas fa-spinner"></i> In Progress</span>';
-              break;
-            case 'Completed':
-              $statusBadge = '<span class="badge bg-success"><i class="fas fa-circle-check"></i> Completed</span>';
-              break;
-            default:
-              $statusBadge = '<span class="badge bg-dark">Unknown</span>';
-              break;
+          $status = trim($task['status']); // Remove spaces if any
+          $status = ucfirst(strtolower($status)); // Normalize case
+          
+          switch ($status) {
+              case 'Not started':
+                  $statusBadge = '<span class="badge bg-secondary"><i class="fas fa-circle-xmark"></i> Not Started</span>';
+                  break;
+              case 'In progress':
+                  $statusBadge = '<span class="badge bg-warning text-dark"><i class="fas fa-spinner"></i> In Progress</span>';
+                  break;
+              case 'Complete': // Fix here (was 'Completed')
+                  $statusBadge = '<span class="badge bg-success"><i class="fas fa-circle-check"></i> Completed</span>';
+                  break;
+              default:
+                  $statusBadge = '<span class="badge bg-dark"><i class="fas fa-question-circle"></i> Unknown</span>';
+                  break;
           }
+          
+          
         ?>
           <tr>
             <td><?= htmlspecialchars($task['title']); ?></td>
